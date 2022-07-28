@@ -10,11 +10,6 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "dev"
-  - package-ecosystem: "bundler" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
-    target-branch: "dev"
   - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/android" # Location of package manifests
     schedule:
