@@ -13,7 +13,7 @@ import {
     LearnMoreLinks,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { authStyle as style } from '../Style';
+import { authStyle as style } from '../core/Style';
 import Section from '../Section';
 
 const Auth = () => {

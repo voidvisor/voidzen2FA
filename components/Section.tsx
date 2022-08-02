@@ -1,7 +1,7 @@
 import React, {type PropsWithChildren} from 'react';
 import { useColorScheme, View, Text } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { sectionStyle as style } from './Style';
+import { sectionStyle as style } from './core/Style';
 
 const Section: React.FC<
   PropsWithChildren<{
