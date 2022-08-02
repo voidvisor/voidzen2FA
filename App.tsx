@@ -3,7 +3,7 @@ import Auth from './components/views/Auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Button, StatusBar } from 'react-native';
-import Colors from './components/Colors';
+import Colors from './components/core/Colors';
 
 const Tab = createMaterialBottomTabNavigator();
 
