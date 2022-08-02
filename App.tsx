@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Auth from './components/views/Auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { Button, StatusBar, StyleSheet } from 'react-native';
+import { Button, StatusBar } from 'react-native';
 import Colors from './components/Colors';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -36,24 +36,4 @@ const App = () => {
   );
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;
-export {styles};
