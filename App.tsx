@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Button, StatusBar, StyleSheet } from 'react-native';
 import Colors from './components/Colors';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createMaterialBottomTabNavigator();
 
