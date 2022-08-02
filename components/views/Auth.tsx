@@ -2,7 +2,6 @@ import React, {type PropsWithChildren} from 'react';
 import {
     SafeAreaView,
     ScrollView,
-    StatusBar,
     Text,
     useColorScheme,
     View,
@@ -14,7 +13,7 @@ import {
     LearnMoreLinks,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { styles } from '../../App';
+import { authStyle as style } from '../Style';
 import Section from '../Section';
 
 const Auth = () => {
@@ -36,7 +35,7 @@ const Auth = () => {
               }}>
               <Section title="Step One">
                 <Text>Edit </Text>
-                <Text style={styles.highlight}>App.tsx </Text>
+                <Text style={style.highlight}>App.tsx </Text>
                 <Text>
                   to change this screen and then come back to see your edits.
                 </Text>

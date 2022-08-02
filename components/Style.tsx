@@ -14,9 +14,12 @@ const sectionStyle = StyleSheet.create({
       fontSize: 18,
       fontWeight: '400',
     },
-    highlight: {
-      fontWeight: '700',
-    },
-  });
+});
 
-export { sectionStyle };
+const authStyle = StyleSheet.create({
+    highlight: {
+        fontWeight: '700',
+    },
+});
+
+export { sectionStyle, authStyle };
