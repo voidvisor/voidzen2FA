@@ -7,14 +7,6 @@ import Colors from './components/core/Colors';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const authLock = () => {
-  return (
-    <Button 
-      title='Lock'
-    />
-  )
-}
-
 const App = () => {
   return (
     <>
