@@ -1,15 +1,19 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { Button, StatusBar } from 'react-native';
-import Colors from './components/core/Colors';
+import { StatusBar, useColorScheme } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { themeColors, lightTheme } from './components/core/Themes';
 import Auth from './components/views/Auth';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const Colors = isDarkMode ? themeColors.dark : themeColors.light;
+
   return (
-    <>
+    <PaperProvider theme={lightTheme}>
       <StatusBar
         backgroundColor={Colors.primary}
         barStyle="light-content"
@@ -24,7 +28,7 @@ const App = () => {
           <Tab.Screen name="Codes" component={Auth} options={{tabBarIcon: 'shield-key'}} />
         </Tab.Navigator>
       </NavigationContainer>
-    </>
+    </PaperProvider>
   );
 }
 

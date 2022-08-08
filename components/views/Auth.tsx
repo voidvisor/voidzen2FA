@@ -7,21 +7,24 @@ import {
     View,
 } from 'react-native';
 import {
-    Colors,
+    Colors as nativeColors,
     DebugInstructions,
     Header,
     LearnMoreLinks,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import { authStyle as style } from '../core/Style';
+import { themeColors } from '../core/Themes';
 import Section from '../Section';
 
 const Auth = () => {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        backgroundColor: isDarkMode ? nativeColors.darker : nativeColors.lighter,
     };
+
+    const Colors = isDarkMode ? themeColors.dark : themeColors.light;
 
     return(
         <SafeAreaView style={backgroundStyle}>
