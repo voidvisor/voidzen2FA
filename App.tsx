@@ -1,9 +1,9 @@
-import Auth from './components/views/Auth';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Button, StatusBar } from 'react-native';
 import Colors from './components/core/Colors';
+import Auth from './components/views/Auth';
 
 const Tab = createMaterialBottomTabNavigator();
 
