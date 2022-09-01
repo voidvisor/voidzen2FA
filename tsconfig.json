@@ -7,5 +7,6 @@
     /* Completeness */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "noImplicitAny": false,                               /* Warn on expressions and declarations with an implied 'any' type. */
+    "types": [ "node" ],                                    /* Add support for Node.js built-in modules. */
   }
 }
