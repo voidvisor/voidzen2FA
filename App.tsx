@@ -26,7 +26,7 @@ const App = () => {
           inactiveColor={Colors.lightGray}
           barStyle={{ backgroundColor: Colors.primary }}
         >
-          <Tab.Screen name="Codes" component={Auth} options={{tabBarIcon: 'shield-key'}} />
+          <Tab.Screen name="Accounts" component={Auth} options={{tabBarIcon: 'shield-key'}} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
