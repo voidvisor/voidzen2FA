@@ -1,4 +1,4 @@
-package com.voidzen2fa;
+package com.voidzen.mfa;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
