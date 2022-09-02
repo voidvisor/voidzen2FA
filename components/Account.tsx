@@ -7,12 +7,11 @@ import base32 from 'thirty-two';
 import React from "react";
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { Pressable, View } from 'react-native';
-import { Avatar, Headline, Subheading, Text } from "react-native-paper";
-import { themeColors } from './core/Themes';
+import { Avatar, Headline, Subheading, Text, useTheme } from "react-native-paper";
 import Svg, { Circle } from 'react-native-svg';
 
 const Code = ({uuid}) => {
-    const defAcc = {icon: 'help', issuer: 'error', account: 'error', secret: 'OZXWSZD2MVXG2ZTB', encoding: 'base32', digits: 6, period: 30}
+    const { colors } = useTheme();
     const [code, setCode] = React.useState('');
     const [acc, setAcc] = React.useState(defAcc);
     const [time, setTime] = React.useState(0);
@@ -115,7 +114,7 @@ const Code = ({uuid}) => {
     }, [time])
     
     return (
-        <Pressable android_ripple={{color: themeColors.light.lightGray}} style={{borderColor: 'lightgray', flexDirection: 'row', alignItems: 'center', paddingVertical: 10}}>
+        <Pressable android_ripple={{color: colors.backdrop}} style={{borderColor: 'lightgray', flexDirection: 'row', alignItems: 'center', paddingVertical: 10}}>
             <Avatar.Icon icon={acc.icon} size={50} style={{marginHorizontal: 20}} />
             <Headline>
                 {code}
@@ -127,8 +126,8 @@ const Code = ({uuid}) => {
             </Headline>
             <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginStart: 'auto', marginEnd: 20}}>
                 <Svg style={{height: 40, width: 40, transform: [{rotate: '-90deg'}]}} >
-                    <Circle cx={20} cy={20} r={15} stroke={themeColors.light.lightGray} strokeWidth={5} strokeDasharray={2*Math.PI*15} />
-                    <Circle cx={20} cy={20} r={15} stroke={themeColors.light.primary} strokeWidth={5} strokeDasharray={[(time/30)*2*Math.PI*15, 2*Math.PI*15]} />
+                    <Circle cx={20} cy={20} r={15} stroke={colors.backdrop} strokeWidth={5} strokeDasharray={2*Math.PI*15} />
+                    <Circle cx={20} cy={20} r={15} stroke={colors.primary} strokeWidth={5} strokeDasharray={[(time/30)*2*Math.PI*15, 2*Math.PI*15]} />
                 </Svg>
                 <Text style={{position: 'absolute'}}>{time}</Text>
             </View>

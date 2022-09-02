@@ -5,12 +5,10 @@
 import React from 'react';
 import {
   FlatList,
-  useColorScheme,
   View,
 } from 'react-native';
 import { authStyle as style } from '../core/Style';
-import { themeColors } from '../core/Themes';
-import { Appbar, Button, Headline, Subheading } from 'react-native-paper';
+import { Appbar, Button, Headline, Subheading, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -22,9 +20,7 @@ const Auth = () => {
   const [auth, setAuth] = React.useState(false);
   const [accList, setAccList] = React.useState([{uuid: 'test'}]);
 
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const Colors = isDarkMode ? themeColors.dark : themeColors.light;
+  const { colors } = useTheme();
 
   const promptBiometrics = async () => {
     if (auth === false) {
@@ -64,11 +60,11 @@ const Auth = () => {
   return (
     <>
     <Appbar.Header>
-      <Appbar.Action icon="lock" color={Colors.white} onPress={() => setAuth(false)} style={style.lockButton} />
+      <Appbar.Action icon="lock" color={colors.surface} onPress={() => setAuth(false)} style={style.lockButton} />
     </Appbar.Header>
-    <FlatList contentContainerStyle={{flexDirection: 'column', minHeight: '100%'}} renderItem={renderAuth} data={accList} ListEmptyComponent={
+    <FlatList contentContainerStyle={{flexDirection: 'column', flex: 1}} renderItem={renderAuth} data={accList} ListEmptyComponent={
       <View style={style.lockedView}>
-        <Icon name='help' size={200} color={Colors.secondary} />
+        <Icon name='help' size={200} color={colors.accent} />
         <Headline>It's empty here.</Headline>
         <Subheading>Add some accounts using the plus button!</Subheading>
       </View>
@@ -78,7 +74,7 @@ const Auth = () => {
   } else {
     return (
     <View style={style.lockedView}>
-        <Icon name='lock' size={200} color={Colors.secondary} />
+        <Icon name='lock' size={200} color={colors.accent} />
         <Headline style={{paddingBottom: 6}}>Authenticator Locked</Headline>
         <Button mode='contained' dark={true} onPress={() => promptBiometrics()}>PRESS TO UNLOCK</Button>
       </View>

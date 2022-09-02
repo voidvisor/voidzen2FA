@@ -24,6 +24,8 @@ const lightTheme = {
     colors: {
         ...DefaultTheme.colors,
         primary: themeColors.light.primary,
+        accent: themeColors.light.secondary,
+        backdrop: themeColors.light.lightGray,
     },
 }
 
