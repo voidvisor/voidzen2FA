@@ -7,11 +7,12 @@ import base32 from 'thirty-two';
 import React from "react";
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { Pressable, View } from 'react-native';
-import { Avatar, Headline, Subheading, Text, useTheme } from "react-native-paper";
+import { Avatar, Headline, IconButton, Subheading, Text, useTheme } from "react-native-paper";
 import Svg, { Circle } from 'react-native-svg';
 
 const Code = ({uuid}) => {
     const { colors } = useTheme();
+    const defAcc = {icon: 'help', issuer: 'error', account: 'error', secret: 'OZXWSZD2MVXG2ZTB', encoding: 'base32', digits: 6, period: 30, counter: 0, totp: false}
     const [code, setCode] = React.useState('');
     const [acc, setAcc] = React.useState(defAcc);
     const [time, setTime] = React.useState(0);
@@ -33,7 +34,14 @@ const Code = ({uuid}) => {
         const encoding = input.encoding;
         const digits = input.digits;
         const period = input.period;
-        const counter = Math.floor(Date.now()/(period*1000));
+        let counter;
+        if (input.totp) {
+            counter = Math.floor(Date.now()/(period*1000));
+        } else {
+            counter = input.counter;
+            input.counter++;
+            setAcc(input);
+        }
 
         if (!Buffer.isBuffer(secret)) {
             if (encoding === 'base32') {
@@ -60,58 +68,67 @@ const Code = ({uuid}) => {
             (digest[offset + 3] & 0xff);
         
         let finalCode = code.toString(10).padStart(digits, '0');
-        setCode(finalCode.slice(-digits));
-        const interval = (acc.period * 1000) - (Date.now() % (acc.period * 1000));
-        setTimeout(() => generateCode(acc), interval);
+        return finalCode.slice(-digits);
+    }
+
+    const totpLoop = (input) => {
+        setCode(generateCode(input));
+        const interval = (input.period * 1000) - (Date.now() % (input.period * 1000));
+        setTimeout(() => totpLoop(input), interval);
     }
 
     React.useEffect(() => {
+        let timer;
+
         if (acc === defAcc) {
             retrieveAccount();
         }
 
-        if (!code) {
-            generateCode(acc);
+        if (!code && acc.totp) {
+            totpLoop(acc);
         }
 
-        let timer;
-        if (!time) {
-            let timerTime = Math.floor(((acc.period * 1000) - (Date.now() % (acc.period * 1000)))/1000);
-            if (!timerTime) {
-                timerTime = 30;
-            }
-            timeRef.current = timerTime;
-            timer = setTimeout(() => {
-                timeRef.current = timerTime-1;
-                if (timeRef.current < 0) {
-                  clearTimeout(timer);
-                } else {
-                  setTime(timeRef.current);
-                  timer = setInterval(() => {
+        if (acc.totp) {
+            if (!time) {
+                let timerTime = Math.floor(((acc.period * 1000) - (Date.now() % (acc.period * 1000)))/1000);
+                if (!timerTime) {
+                    timerTime = acc.period;
+                }
+                timeRef.current = timerTime;
+                timer = setTimeout(() => {
+                    timeRef.current = timerTime-1;
+                    if (timeRef.current < 0) {
+                      clearTimeout(timer);
+                    } else {
+                      setTime(timeRef.current);
+                      timer = setInterval(() => {
+                        timeRef.current--;
+                        if (timeRef.current < 0) {
+                          clearInterval(timer);
+                        } else {
+                          setTime(timeRef.current);
+                        }
+                      }, 1000);
+                    }
+                  }, 1000 - (Date.now() % 1000));
+            } else {
+                timer = setInterval(() => {
                     timeRef.current--;
                     if (timeRef.current < 0) {
                       clearInterval(timer);
                     } else {
                       setTime(timeRef.current);
                     }
-                  }, 1000);
-                }
-              }, 1000 - (Date.now() % 1000));
+                  }, 1000 - (Date.now() % 1000));
+            }
         } else {
-            timer = setInterval(() => {
-                timeRef.current--;
-                if (timeRef.current < 0) {
-                  clearInterval(timer);
-                } else {
-                  setTime(timeRef.current);
-                }
-              }, 1000 - (Date.now() % 1000));
+            setCode(code.padStart(acc.digits, '-'))
         }
 
         return () => {
             clearInterval(timer);
         };
-    }, [time])
+    }, [acc, time])
     
     return (
         <Pressable android_ripple={{color: colors.backdrop}} style={{borderColor: 'lightgray', flexDirection: 'row', alignItems: 'center', paddingVertical: 10}}>
@@ -124,13 +141,16 @@ const Code = ({uuid}) => {
                     : <Subheading>{acc.account}</Subheading>
                 }
             </Headline>
-            <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginStart: 'auto', marginEnd: 20}}>
+            {acc.totp
+            ? <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginStart: 'auto', marginEnd: 20}}>
                 <Svg style={{height: 40, width: 40, transform: [{rotate: '-90deg'}]}} >
                     <Circle cx={20} cy={20} r={15} stroke={colors.backdrop} strokeWidth={5} strokeDasharray={2*Math.PI*15} />
-                    <Circle cx={20} cy={20} r={15} stroke={colors.primary} strokeWidth={5} strokeDasharray={[(time/30)*2*Math.PI*15, 2*Math.PI*15]} />
+                    <Circle cx={20} cy={20} r={15} stroke={colors.primary} strokeWidth={5} strokeDasharray={[(time/acc.period)*2*Math.PI*15, 2*Math.PI*15]} />
                 </Svg>
                 <Text style={{position: 'absolute'}}>{time}</Text>
             </View>
+            : <IconButton icon={'refresh'} style={{marginStart: 'auto', marginEnd: 20}} color={colors.primary} onPress={() => {setCode(generateCode(acc))}} />
+            }
         </Pressable>
     )
 }
