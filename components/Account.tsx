@@ -1,3 +1,7 @@
+/**
+ * @format
+ */
+
 import { createHmac } from '../crypto';
 import base32 from 'thirty-two';
 import React from "react";

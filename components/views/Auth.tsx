@@ -1,3 +1,7 @@
+/**
+ * @format
+ */
+
 import React from 'react';
 import {
   FlatList,
@@ -63,7 +67,7 @@ const Auth = () => {
       <Appbar.Action icon="lock" color={Colors.white} onPress={() => setAuth(false)} style={style.lockButton} />
     </Appbar.Header>
     <FlatList contentContainerStyle={{flexDirection: 'column', minHeight: '100%'}} renderItem={renderAuth} data={accList} ListEmptyComponent={
-      <View style={accList === [] && style.lockedView}>
+      <View style={style.lockedView}>
         <Icon name='help' size={200} color={Colors.secondary} />
         <Headline>It's empty here.</Headline>
         <Subheading>Add some accounts using the plus button!</Subheading>
