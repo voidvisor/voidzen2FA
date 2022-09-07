@@ -9,6 +9,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { Pressable, View } from 'react-native';
 import { Avatar, Headline, IconButton, Subheading, Text, useTheme } from "react-native-paper";
 import Svg, { Circle } from 'react-native-svg';
+import { accountStyle as style } from './core/Style';
 
 const Code = ({uuid}) => {
     const { colors } = useTheme();
@@ -131,25 +132,25 @@ const Code = ({uuid}) => {
     }, [acc, time])
     
     return (
-        <Pressable android_ripple={{color: colors.backdrop}} style={{borderColor: 'lightgray', flexDirection: 'row', alignItems: 'center', paddingVertical: 10}}>
-            <Avatar.Icon icon={acc.icon} size={50} style={{marginHorizontal: 20}} />
+        <Pressable android_ripple={{color: colors.backdrop}} style={style.pressable}>
+            <Avatar.Icon icon={acc.icon} size={50} style={style.icon} />
             <Headline>
                 {code}
                 {'\n'}
                 {acc.issuer
-                    ? <Subheading style={{color: 'gray'}}>{`${acc.issuer} (${acc.account})`}</Subheading>
+                    ? <Subheading style={{color: colors.description}}>{`${acc.issuer} (${acc.account})`}</Subheading>
                     : <Subheading>{acc.account}</Subheading>
                 }
             </Headline>
             {acc.totp
-            ? <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginStart: 'auto', marginEnd: 20}}>
-                <Svg style={{height: 40, width: 40, transform: [{rotate: '-90deg'}]}} >
+            ? <View style={style.timerView}>
+                <Svg style={style.timerSvg} >
                     <Circle cx={20} cy={20} r={15} stroke={colors.backdrop} strokeWidth={5} strokeDasharray={2*Math.PI*15} />
                     <Circle cx={20} cy={20} r={15} stroke={colors.primary} strokeWidth={5} strokeDasharray={[(time/acc.period)*2*Math.PI*15, 2*Math.PI*15]} />
                 </Svg>
-                <Text style={{position: 'absolute'}}>{time}</Text>
+                <Text style={style.timerText}>{time}</Text>
             </View>
-            : <IconButton icon={'refresh'} style={{marginStart: 'auto', marginEnd: 20}} color={colors.primary} onPress={() => {setCode(generateCode(acc))}} />
+            : <IconButton icon={'refresh'} style={style.hotpRefresh} color={colors.primary} onPress={() => {setCode(generateCode(acc))}} />
             }
         </Pressable>
     )

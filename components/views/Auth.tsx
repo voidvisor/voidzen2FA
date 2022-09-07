@@ -62,7 +62,7 @@ const Auth = () => {
     <Appbar.Header>
       <Appbar.Action icon="lock" color={colors.surface} onPress={() => setAuth(false)} style={style.lockButton} />
     </Appbar.Header>
-    <FlatList contentContainerStyle={{flexDirection: 'column', flex: 1}} renderItem={renderAuth} data={accList} ListEmptyComponent={
+    <FlatList contentContainerStyle={style.flatListContainer} renderItem={renderAuth} data={accList} ListEmptyComponent={
       <View style={style.lockedView}>
         <Icon name='help' size={200} color={colors.accent} />
         <Headline>It's empty here.</Headline>
