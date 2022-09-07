@@ -13,7 +13,7 @@ import { accountStyle as style } from './core/Style';
 
 const Code = ({uuid}) => {
     const { colors } = useTheme();
-    const defAcc = {icon: 'help', issuer: 'error', account: 'error', secret: 'OZXWSZD2MVXG2ZTB', encoding: 'base32', digits: 6, period: 30, counter: 0, totp: false}
+    const defAcc = {icon: 'help', issuer: 'error', account: 'error', secret: 'error', encoding: 'ascii', digits: 6, period: 30, counter: 0, totp: true}
     const [code, setCode] = React.useState('');
     const [acc, setAcc] = React.useState(defAcc);
     const [time, setTime] = React.useState(0);
