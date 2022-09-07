@@ -10,6 +10,7 @@ const themeColors = {
         secondary: '#b19cd9',
         white: '#ffffff',
         lightGray: '#cccccc',
+        gray: '#808080',
     },
     dark: {
         primary: '#191919',
@@ -26,6 +27,7 @@ const lightTheme = {
         primary: themeColors.light.primary,
         accent: themeColors.light.secondary,
         backdrop: themeColors.light.lightGray,
+        description: themeColors.light.gray,
     },
 }
 

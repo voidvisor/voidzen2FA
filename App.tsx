@@ -10,6 +10,14 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { themeColors, lightTheme, darkTheme } from './components/core/Themes';
 import Auth from './components/views/Auth';
 
+declare global {
+  namespace ReactNativePaper {
+    interface ThemeColors {
+      description?: string,
+    }
+  }
+}
+
 const Tab = createMaterialBottomTabNavigator();
 
 const App = () => {
