@@ -53,7 +53,6 @@ const Auth = () => {
 
   const renderAuth = ({ item }) => (
     <Account uuid={item.uuid} />
-    /* awaiting custom implementation */
   )
 
   if (auth) {
