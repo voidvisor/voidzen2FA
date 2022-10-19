@@ -22,6 +22,15 @@ const authStyle = StyleSheet.create({
       flexDirection: 'column',
       flex: 1,
     },
+    fab: {
+      position: 'absolute',
+      right: 0,
+      bottom: 0,
+      margin: 16,
+    },
+    header: {
+      zIndex: 1,
+    },
 })
 
 const accountStyle = StyleSheet.create({
@@ -54,4 +63,5 @@ const accountStyle = StyleSheet.create({
     marginEnd: 20,
   },
 })
+
 export { authStyle, accountStyle }
