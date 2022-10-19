@@ -8,7 +8,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { StatusBar, useColorScheme } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { themeColors, lightTheme, darkTheme } from './components/core/Themes';
-import Auth from './components/views/Auth';
+import AuthStack from './components/views/AuthStack';
 
 declare global {
   namespace ReactNativePaper {
@@ -33,12 +33,12 @@ const App = () => {
       />
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName="Auth"
+          initialRouteName="Accounts"
           activeColor={Colors.white}
           inactiveColor={Colors.lightGray}
           barStyle={{ backgroundColor: Colors.primary }}
         >
-          <Tab.Screen name="Accounts" component={Auth} options={{tabBarIcon: 'shield-key'}} />
+          <Tab.Screen name="Accounts" component={AuthStack} options={{tabBarIcon: 'shield-key'}} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
