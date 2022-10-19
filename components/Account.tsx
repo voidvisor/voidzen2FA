@@ -21,34 +21,36 @@ const Code = ({uuid}) => {
 
     const retrieveAccount = async () => {
         try {
-        const account = await EncryptedStorage.getItem(uuid);
-        if (account) {
-            setAcc(JSON.parse(account!));
-        }
+            const account = await EncryptedStorage.getItem(uuid);
+            if (account) {
+                setAcc(JSON.parse(account));
+            }
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     }
 
-    const generateCode = (input) => {
-        let secret = input.secret;
-        const encoding = input.encoding;
-        const digits = input.digits;
-        const period = input.period;
+    const generateCode = () => {
+        let secret = acc.secret;
+        const encoding = acc.encoding;
+        const digits = acc.digits;
+        const period = acc.period;
         let counter;
-        if (input.totp) {
+        if (acc.totp) {
             counter = Math.floor(Date.now()/(period*1000));
         } else {
-            counter = input.counter;
-            input.counter++;
-            setAcc(input);
+            counter = acc.counter;
+            acc.counter++;
+            setAcc(acc);
         }
 
+        let bufSecret;
         if (!Buffer.isBuffer(secret)) {
             if (encoding === 'base32') {
-                secret = base32.decode(secret);
+                bufSecret = base32.decode(secret);
             }
-            secret = Buffer.from(secret, encoding);
+            // @ts-expect-error
+            bufSecret = Buffer.from(secret, encoding);
         }
         
         let buf = Buffer.alloc(8);
@@ -72,10 +74,10 @@ const Code = ({uuid}) => {
         return finalCode.slice(-digits);
     }
 
-    const totpLoop = (input) => {
-        setCode(generateCode(input));
-        const interval = (input.period * 1000) - (Date.now() % (input.period * 1000));
-        setTimeout(() => totpLoop(input), interval);
+    const totpLoop = () => {
+        setCode(generateCode());
+        const interval = (acc.period * 1000) - (Date.now() % (acc.period * 1000));
+        setTimeout(() => totpLoop(), interval);
     }
 
     React.useEffect(() => {
@@ -85,8 +87,8 @@ const Code = ({uuid}) => {
             retrieveAccount();
         }
 
-        if (!code && acc.totp) {
-            totpLoop(acc);
+        if (!code && acc.totp && acc !== defAcc) {
+            totpLoop();
         }
 
         if (acc.totp) {
@@ -133,13 +135,13 @@ const Code = ({uuid}) => {
     
     return (
         <Pressable android_ripple={{color: colors.backdrop}} style={style.pressable}>
-            <Avatar.Icon icon={acc.icon} size={50} style={style.icon} />
+            <Avatar.Icon icon={acc.icon.length === 1 ? `alpha-`+acc.icon : acc.icon} size={50} style={style.icon} />
             <Headline>
                 {code}
                 {'\n'}
                 {acc.issuer
                     ? <Subheading style={{color: colors.description}}>{`${acc.issuer} (${acc.account})`}</Subheading>
-                    : <Subheading>{acc.account}</Subheading>
+                    : <Subheading style={{color: colors.description}}>{acc.account}</Subheading>
                 }
             </Headline>
             {acc.totp
@@ -150,7 +152,7 @@ const Code = ({uuid}) => {
                 </Svg>
                 <Text style={style.timerText}>{time}</Text>
             </View>
-            : <IconButton icon={'refresh'} style={style.hotpRefresh} color={colors.primary} onPress={() => {setCode(generateCode(acc))}} />
+            : <IconButton icon={'refresh'} style={style.hotpRefresh} color={colors.primary} onPress={() => {setCode(generateCode());setTimeout(() => {setCode('-'.repeat(acc.digits))}, 30000)}} />
             }
         </Pressable>
     )
