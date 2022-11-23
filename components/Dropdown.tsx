@@ -3,8 +3,8 @@
  */
 
 import React from "react";
-import { StyleProp, TextStyle } from "react-native";
-import { Menu, TextInput, TouchableRipple } from "react-native-paper";
+import { StyleProp, TextStyle, TouchableWithoutFeedback } from "react-native";
+import { Menu, TextInput } from "react-native-paper";
 import { TextInputLabelProp } from "react-native-paper/lib/typescript/components/TextInput/types";
 
 interface listItem {
@@ -30,7 +30,6 @@ interface dropdownProps {
 const Dropdown = (props: dropdownProps) => {
     const {value, setValue, mode, left, disabled, label, placeholder, error, underlineColor, outlineColor, list, style} = props;
     const [menu, setMenu] = React.useState(false);
-    const [icon, setIcon] = React.useState('menu-down');
     const [layout, setLayout] = React.useState({
         width: 0,
         height: 0,
@@ -39,7 +38,7 @@ const Dropdown = (props: dropdownProps) => {
     })
 
     const menuOptions = list.map((item) => 
-        <Menu.Item key={item.value} title={item.label} onPress={() => {setValue(item.value);setMenu(false);setIcon('menu-down')}} />
+        <Menu.Item key={item.value} title={item.label} onPress={() => {setValue(item.value);setMenu(false)}} />
     )
 
     const getLabel = (val) => {
@@ -51,13 +50,11 @@ const Dropdown = (props: dropdownProps) => {
     }
 
     return (
-        <Menu visible={menu} onDismiss={() => {setMenu(false);setIcon('menu-down')}} anchor={<TouchableRipple rippleColor="transparent" onLayout={(event) => setLayout(event.nativeEvent.layout)} onPress={() => {setMenu(true);setIcon('menu-up')}}>
-                <TextInput label={label} mode={mode} value={getLabel(value)} editable={false} left={left} right={<TextInput.Icon name={icon} onPress={() => {setMenu(true);setIcon('menu-up')}} />} disabled={disabled} placeholder={placeholder} error={error} underlineColor={underlineColor} outlineColor={outlineColor} />
-            </TouchableRipple>} style={{
+        <Menu visible={menu} onDismiss={() => {setMenu(false)}} anchor={<TouchableWithoutFeedback onLayout={(event) => setLayout(event.nativeEvent.layout)} onPress={() => {setMenu(true)}}>
+                <TextInput label={label} mode={mode} value={getLabel(value)} editable={false} left={left} right={<TextInput.Icon name={menu ? 'menu-up' : 'menu-down'} onPress={() => {setMenu(true)}} />} disabled={disabled} placeholder={placeholder} error={error} underlineColor={underlineColor} outlineColor={outlineColor} />
+            </TouchableWithoutFeedback>} style={{
                 marginTop: layout.height,
                 width: layout.width,
-                left: layout.x,
-                ...style as Object,
             }}>
             {menuOptions}
         </Menu>
