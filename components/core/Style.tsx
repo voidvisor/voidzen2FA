@@ -31,6 +31,9 @@ const authStyle = StyleSheet.create({
     header: {
       zIndex: 1,
     },
+    lockedHeadline: {
+      paddingBottom: 6,
+    },
 })
 
 const accountStyle = StyleSheet.create({

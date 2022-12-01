@@ -91,7 +91,7 @@ const Auth = ({auth, setAuth, setBack, navigation}) => {
     return (
       <View style={style.lockedView}>
         <Icon name='lock' size={200} color={colors.accent} />
-        <Headline style={{paddingBottom: 6}}>Authenticator Locked</Headline>
+        <Headline style={style.lockedHeadline}>Authenticator Locked</Headline>
         <Button mode='contained' dark={true} onPress={() => promptBiometrics()}>PRESS TO UNLOCK</Button>
       </View>
     )
