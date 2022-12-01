@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { StyleProp, TextStyle, TouchableWithoutFeedback } from "react-native";
+import { Pressable, StyleProp, TextStyle, View } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import { TextInputLabelProp } from "react-native-paper/lib/typescript/components/TextInput/types";
 
@@ -50,14 +50,16 @@ const Dropdown = (props: dropdownProps) => {
     }
 
     return (
-        <Menu visible={menu} onDismiss={() => {setMenu(false)}} anchor={<TouchableWithoutFeedback onLayout={(event) => setLayout(event.nativeEvent.layout)} onPress={() => {setMenu(true)}}>
-                <TextInput label={label} mode={mode} value={getLabel(value)} editable={false} left={left} right={<TextInput.Icon name={menu ? 'menu-up' : 'menu-down'} onPress={() => {setMenu(true)}} />} disabled={disabled} placeholder={placeholder} error={error} underlineColor={underlineColor} outlineColor={outlineColor} />
-            </TouchableWithoutFeedback>} style={{
-                marginTop: layout.height,
-                width: layout.width,
-            }}>
-            {menuOptions}
-        </Menu>
+        <View style={style}>
+            <Menu visible={menu} onDismiss={() => {setMenu(false)}} anchor={<Pressable onLayout={(event) => setLayout(event.nativeEvent.layout)} onPress={() => {setMenu(true)}}>
+                    <TextInput label={label} mode={mode} value={getLabel(value)} editable={false} left={left} right={<TextInput.Icon name={menu ? 'menu-up' : 'menu-down'} onPress={() => {setMenu(true)}} />} disabled={disabled} placeholder={placeholder} error={error} underlineColor={underlineColor} outlineColor={outlineColor} />
+                </Pressable>} style={{
+                    marginTop: layout.height,
+                    width: layout.width
+                }}>
+                {menuOptions}
+            </Menu>
+        </View>
     )
 }
 
