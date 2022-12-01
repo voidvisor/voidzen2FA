@@ -5,7 +5,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { Button, TextInput, useTheme } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dropdown from '../Dropdown';
 import 'react-native-random-uuid';
@@ -19,7 +19,6 @@ const Manual = ({navigation}) => {
     const [period, setPeriod] = React.useState('30');
     const [numbers, setNumbers] = React.useState('6');
     const [counter, setCounter] = React.useState('0');
-    const {colors} = useTheme();
 
     const totpList = [
         {
@@ -59,6 +58,7 @@ const Manual = ({navigation}) => {
         }
     }
 
+    // TODO: Check if this actually works...
     const checkEncoding = () => {
         const b32_regex = /^[A-Z2-7]+=*$/;
 
@@ -121,16 +121,17 @@ const Manual = ({navigation}) => {
     }
 
     return (
-        <View>
-            <TextInput mode='outlined' label='Name' value={name} onChangeText={text => setName(text)} />
-            <TextInput mode='outlined' label='Issuer' value={issuer} onChangeText={text => setIssuer(text)} />
-            <TextInput mode='outlined' label='Secret' value={secret} onChangeText={text => setSecret(text)} />
-            <Dropdown label='Type' mode='outlined' list={totpList} value={totp} setValue={setTotp}></Dropdown>
-            <Dropdown label='Algorithm' mode='outlined' list={algoList} value={algorithm} setValue={setAlgorithm}></Dropdown>
-            <TextInput mode='outlined' label='Period' keyboardType='numeric' value={period} onChangeText={text => setPeriod(text.replace(/[^0-9]/g, ''))} />
-            <TextInput mode='outlined' label='Numbers' keyboardType='numeric' value={numbers} onChangeText={text => setNumbers(text.replace(/[^0-9]/g, ''))} />
-            <TextInput mode='outlined' label='Counter' keyboardType='numeric' value={counter} onChangeText={text => setCounter(text.replace(/[^0-9]/g, ''))} />
-            <Button mode='contained' onPress={() => submitForm()}>
+        <View style={{margin: 8, alignItems: 'flex-end'}}>
+            <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+                <TextInput style={{flexBasis: '100%'}} mode='outlined' label='Name' value={name} onChangeText={text => setName(text)} />
+                <TextInput style={{flexBasis: '100%'}} mode='outlined' label='Issuer' value={issuer} onChangeText={text => setIssuer(text)} />
+                <TextInput style={{flexBasis: '100%'}} mode='outlined' label='Secret' value={secret} onChangeText={text => setSecret(text)} />
+                <Dropdown style={{flexBasis: '48%'}} label='Type' mode='outlined' list={totpList} value={totp} setValue={setTotp} />
+                <Dropdown style={{flexBasis: '48%'}} label='Algorithm' mode='outlined' list={algoList} value={algorithm} setValue={setAlgorithm} />
+                {totp ? <TextInput style={{flexBasis: '48%'}} mode='outlined' label='Period' keyboardType='numeric' value={period} onChangeText={text => setPeriod(text.replace(/[^0-9]/g, ''))} /> : <TextInput style={{flexBasis: '48%'}} mode='outlined' label='Counter' keyboardType='numeric' value={counter} onChangeText={text => setCounter(text.replace(/[^0-9]/g, ''))} />}
+                <TextInput style={{flexBasis: '48%'}} mode='outlined' label='Numbers' keyboardType='numeric' value={numbers} onChangeText={text => setNumbers(text.replace(/[^0-9]/g, ''))} />
+            </View>
+            <Button style={{marginTop: 8, width: 75}} mode='contained' onPress={() => submitForm()}>
                 Save
             </Button>
         </View>
