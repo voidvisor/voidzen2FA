@@ -67,4 +67,27 @@ const accountStyle = StyleSheet.create({
   },
 })
 
-export { authStyle, accountStyle }
+const manualStyle = StyleSheet.create({
+  flex: {
+    margin: 8,
+    alignItems: 'flex-end',
+  },
+  inputView: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  wide: {
+    flexBasis: '100%',
+  },
+  half: {
+    flexBasis: '48%',
+  },
+  submit: {
+    marginTop: 8,
+    width: 75,
+  },
+})
+
+export { authStyle, accountStyle, manualStyle }
