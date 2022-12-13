@@ -58,9 +58,8 @@ const Manual = ({navigation}) => {
         }
     }
 
-    // TODO: Check if this actually works...
     const checkEncoding = () => {
-        const b32_regex = /^[A-Z2-7]+=*$/;
+        const b32_regex = /^(?:[A-Z2-7]{8})*(?:[A-Z2-7]{2}={0,6}|[A-Z2-7]{4}={0,4}|[A-Z2-7]{5}={0,3}|[A-Z2-7]{7}=?)?$/;
 
         if (b32_regex.exec(secret)) {
             return 'base32';
