@@ -48,9 +48,10 @@ const Code = ({uuid}) => {
         if (!Buffer.isBuffer(secret)) {
             if (encoding === 'base32') {
                 bufSecret = base32.decode(secret);
+            } else {
+                // @ts-expect-error
+                bufSecret = Buffer.from(secret, encoding);
             }
-            // @ts-expect-error
-            bufSecret = Buffer.from(secret, encoding);
         }
         
         let buf = Buffer.alloc(8);
