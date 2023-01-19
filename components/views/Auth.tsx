@@ -5,6 +5,7 @@
 import React from 'react';
 import {
   FlatList,
+  Text,
   View,
 } from 'react-native';
 import { authStyle as style } from '../core/Style';
@@ -92,7 +93,9 @@ const Auth = ({auth, setAuth, setBack, navigation}) => {
       <View style={style.lockedView}>
         <Icon name='lock' size={200} color={colors.accent} />
         <Headline style={style.lockedHeadline}>Authenticator Locked</Headline>
-        <Button mode='contained' dark={true} onPress={() => promptBiometrics()}>PRESS TO UNLOCK</Button>
+        <Button mode='contained' dark={true} onPress={() => promptBiometrics()}>
+          <Text>PRESS TO UNLOCK</Text>
+        </Button>
       </View>
     )
   }

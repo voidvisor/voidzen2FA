@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -132,7 +132,7 @@ const Manual = ({navigation}) => {
                 <TextInput style={style.half} mode='outlined' label='Numbers' keyboardType='numeric' value={numbers} onChangeText={text => setNumbers(text.replace(/[^0-9]/g, ''))} />
             </View>
             <Button style={style.submit} mode='contained' onPress={() => submitForm()}>
-                Save
+                <Text>Save</Text>
             </Button>
         </View>
     )
