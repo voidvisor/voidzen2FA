@@ -20,7 +20,7 @@ declare global {
 
 const Tab = createMaterialBottomTabNavigator();
 
-const App = () => {
+function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const Colors = isDarkMode ? themeColors.dark : themeColors.light;
   const theme = isDarkMode ? darkTheme : lightTheme
